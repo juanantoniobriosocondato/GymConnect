@@ -1,1 +1,160 @@
-<p>class-list works!</p>
+<div class="bg-[#0a0a0a] min-h-screen pb-20">
+  
+  <header class="pt-28 pb-12 px-6 text-center bg-gradient-to-b from-[#1a1a1a] to-[#0a0a0a]">
+    <h1 class="text-4xl md:text-6xl font-black text-white uppercase italic tracking-tighter">
+      Horario de <span class="text-orange-600">Clases</span>
+    </h1>
+    <p class="text-gray-400 mt-4 max-w-xl mx-auto uppercase tracking-widest text-sm">
+      Reserva tu plaza en las sesiones de hoy
+    </p>
+  </header>
+
+  <!--
+  <div class="max-w-7xl mx-auto px-6 mb-10 flex flex-wrap gap-4 justify-center">
+    <button class="px-6 py-2 rounded-full bg-orange-600 text-white font-bold text-xs uppercase">Todas</button>
+    <button class="px-6 py-2 rounded-full bg-[#1a1a1a] text-gray-400 hover:text-white border border-gray-800 text-xs uppercase transition-colors">Yoga</button>
+    <button class="px-6 py-2 rounded-full bg-[#1a1a1a] text-gray-400 hover:text-white border border-gray-800 text-xs uppercase transition-colors">Crossfit</button>
+    <button class="px-6 py-2 rounded-full bg-[#1a1a1a] text-gray-400 hover:text-white border border-gray-800 text-xs uppercase transition-colors">Zumba</button>
+  </div>
+-->
+  <!--
+ <div class="bg-[#262626] p-6 mb-10 shadow-2xl rounded-2xl border border-gray-700">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 items-center">
+      
+      <div>
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Marca</mat-label>
+          <mat-select [(ngModel)]="filterBrand" (selectionChange)="applyFilters()">
+            <mat-option value="">Todas</mat-option>
+            <mat-option value="Audi">Audi</mat-option>
+            <mat-option value="Volvo">Volvo</mat-option>
+            <mat-option value="Mercedes">Mercedes</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div>
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Color</mat-label>
+          <input matInput [(ngModel)]="filterColor" (input)="applyFilters()" name="colorFiltro">
+        </mat-form-field>
+      </div>
+
+      <div>
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Estado</mat-label>
+          <mat-select [(ngModel)]="filterStatus" (selectionChange)="applyFilters()">
+            <mat-option value="">Todos</mat-option>
+            <mat-option value="Disponible">Disponible</mat-option>
+            <mat-option value="Reservado">Reservado</mat-option>
+            <mat-option value="Vendido">Vendido</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="flex justify-center md:justify-start">
+        <button mat-button color="warn" (click)="resetFilters()" class="font-bold">
+          <mat-icon>filter_alt_off</mat-icon> LIMPIAR FILTROS
+        </button>
+      </div>
+      
+    </div>
+  </div>
+-->
+  <div class="max-w-7xl mx-auto px-6 mb-12">
+  <div class="bg-[#1a1a1a] p-6 rounded-2xl border border-gray-800 flex flex-wrap gap-6 items-center justify-between">
+    
+    <div class="flex flex-wrap gap-4 flex-grow">
+      <mat-form-field appearance="outline" class="w-full max-w-xs">
+    <mat-label>Filtrar por Disciplina</mat-label>
+    <mat-select [(ngModel)]="disciplinaSeleccionada" (selectionChange)="cargarClases()">
+      <mat-option value="">Todas las disciplinas</mat-option>
+      <mat-option value="Yoga">Yoga</mat-option>
+      <mat-option value="Zumba">Zumba</mat-option>
+      <mat-option value="Crossfit">Crossfit</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+      <mat-form-field appearance="outline" class="min-w-[200px]">
+        <mat-label>Instructor</mat-label>
+        <mat-select>
+          <mat-option value="todos">Cualquier Coach</mat-option>
+          <mat-option value="juan">Coach Juan</mat-option>
+          <mat-option value="alex">Alexander Wick</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="outline" class="min-w-[250px]">
+      <mat-label>Día de la semana</mat-label>
+      <mat-select>
+        <mat-option value="cualquiera">Cualquiera</mat-option>
+        <mat-option value="lunes">Lunes</mat-option>
+        <mat-option value="martes">Martes</mat-option>
+        <mat-option value="miercoles">Miércoles</mat-option>
+        <mat-option value="jueves">Jueves</mat-option>
+        <mat-option value="viernes">Viernes</mat-option>
+        <mat-option value="sabado">Sábado</mat-option>
+        <mat-option value="domingo">Domingo</mat-option>
+      </mat-select>
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+
+  </div>
+</div>
+  <main class="max-w-7xl mx-auto px-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      
+      <div *ngFor="let clase of clases" 
+           class="bg-[#1a1a1a] rounded-3xl overflow-hidden border border-gray-800 hover:border-orange-600/50 transition-all group flex flex-col shadow-xl">
+        
+        <div class="relative h-52 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&w=500" 
+               class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-70">
+          <div class="absolute top-4 left-4">
+            <span class="bg-orange-600 text-white text-[10px] font-black px-4 py-1.5 rounded-full uppercase shadow-lg">
+              {{ clase.disciplina }}
+            </span>
+          </div>
+        </div>
+
+        <div class="p-8 flex-grow">
+          <h3 class="text-2xl font-black text-white mb-4 uppercase italic tracking-tight">
+            {{ clase.nombre }}
+          </h3>
+          
+          <div class="space-y-4 mb-8">
+            <div class="flex items-center text-gray-300">
+              <mat-icon class="!text-lg !w-5 !h-5 mr-3 text-orange-600 text-opacity-80">schedule</mat-icon>
+              <span class="font-medium">{{ clase.fecha }}</span>
+            </div>
+            <div class="flex items-center text-gray-300">
+              <mat-icon class="!text-lg !w-5 !h-5 mr-3 text-orange-600 text-opacity-80">person</mat-icon>
+              <span class="font-medium">{{ clase.instructor }}</span>
+            </div>
+          </div>
+
+          <div class="flex justify-between items-center border-t border-gray-800 pt-6">
+            <div>
+              <p class="text-[10px] text-gray-500 uppercase font-black tracking-widest">Disponibles</p>
+              <p [ngClass]="clase.capacidad > 0 ? 'text-green-500' : 'text-red-500'" class="font-black text-xl">
+                {{ clase.capacidad }}
+              </p>
+            </div>
+            
+            <button [routerLink]="['/clase', clase.id]" 
+                    class="bg-white text-black font-black px-6 py-2.5 rounded-xl text-xs hover:bg-orange-600 hover:text-white transition-all uppercase tracking-tighter">
+              Reservar
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div *ngIf="clases.length === 0" class="text-center py-20">
+      <mat-icon class="!w-16 !h-16 text-gray-800 mb-4">event_busy</mat-icon>
+      <p class="text-gray-500 font-bold uppercase tracking-widest">No hay clases programadas para hoy</p>
+    </div>
+  </main>
+</div>

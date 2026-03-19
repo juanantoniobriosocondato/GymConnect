@@ -1,63 +1,13 @@
-<mat-sidenav-container class="h-screen">
-  
-  <mat-sidenav #drawer mode="over" class="w-64 bg-slate-50">
-    <div *ngIf="authService.currentUser$ | async as user">
-  <div class="bg-[#333333] p-8 text-center text-white">
-    <div class="w-20 h-20 rounded-full mx-auto mb-3 border-2 border-blue-400 bg-slate-500 flex items-center justify-center text-2xl font-bold">
-      {{ user?.Nombre ? user.Nombre.substring(0,1).toUpperCase() : 'U' }}
-    </div>
-    <div class="profile-info">
-      <h3 class="m-0 text-lg">{{ user?.Nombre || 'Sin Nombre' }}</h3>
-      <p class="text-xs opacity-75">{{ user?.Correo }}</p>
-      
-      <span class="badge bg-primary small px-2 mt-1">
-        {{ user?.Rol === 'Administrador' ? 'Administrador' : 'Cliente' }}
-      </span>
-    </div>
+<nav class="bg-black/90 backdrop-blur-md text-white py-5 px-8 sticky top-0 z-50 border-b border-gray-800">
+  <div class="max-w-7xl mx-auto flex justify-between items-center">
+    <a routerLink="/" class="text-2xl font-black tracking-tighter uppercase italic">
+      GYM<span class="text-orange-600">CONNECT</span>
+    </a>
+    
+    
+
+    <button routerLink="/login" class="border-2 border-white hover:bg-white hover:text-black text-white px-6 py-2 rounded-full text-xs font-black uppercase transition-all">
+      Login
+    </button>
   </div>
-
-  <mat-nav-list>
-    <a mat-list-item *ngIf="authService.currentUser$ | async as user" routerLink="/perfil" (click)="drawer.close()">
-      <mat-icon matListItemIcon class="text-amber-500">account_circle</mat-icon>
-      <span matListItemTitle>Perfil</span>
-    </a>
-    <a mat-list-item *ngIf="authService.currentUser$ | async as user" routerLink="/vehiculos" (click)="drawer.close()">
-      <mat-icon matListItemIcon class="text-amber-500">directions_car</mat-icon>
-      <span matListItemTitle>Vehículos</span>
-    </a>
-    <a mat-list-item *ngIf="authService.currentUser$ | async as user" routerLink="/admin" (click)="authService.logout(); drawer.close()">
-      <mat-icon matListItemIcon class="text-amber-500">exit_to_app</mat-icon>
-      <span matListItemTitle>Cerrar sesión</span>
-    </a>
-    </mat-nav-list>
-</div>
-
-    <div *ngIf="!(authService.currentUser$ | async)" class="p-10 text-center">
-      <p>Debes iniciar sesión</p>
-      <button mat-raised-button color="primary" routerLink="/login" (click)="drawer.close()">Ir al Login</button>
-    </div>
-  </mat-sidenav>
-
-  <mat-sidenav-content>
-    <mat-toolbar color="primary" class="flex justify-between items-center px-6 shadow-md sticky top-0 z-50">
-      <div class="flex items-center cursor-pointer" routerLink="/">
-        <mat-icon class="mr-2">directions_car</mat-icon>
-        <span class="text-xl font-bold tracking-tighter">Concoches</span>
-      </div>
-
-      <div class="flex gap-2">
-        <button mat-button routerLink="/login" *ngIf="!(authService.currentUser$ | async)">
-          <mat-icon class="mr-1">login</mat-icon> LOGIN
-        </button>
-        
-        <button mat-flat-button color="accent" (click)="drawer.toggle()" *ngIf="authService.currentUser$ | async">
-          <mat-icon class="mr-1">account_circle</mat-icon> MI PERFIL
-        </button>
-      </div>
-    </mat-toolbar>
-
-    <router-outlet></router-outlet>
-  </mat-sidenav-content>
-
-</mat-sidenav-container>
-
+</nav>

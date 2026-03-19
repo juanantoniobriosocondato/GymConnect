@@ -1,0 +1,72 @@
+<section class="relative h-[60vh] md:h-[70vh] w-full flex items-center justify-center bg-black">
+  <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070" 
+       alt="Gym Hero" 
+       class="absolute inset-0 w-full h-full object-cover opacity-60">
+  <div class="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-black/50"></div>
+  <div class="relative z-10 text-center px-6">
+    <h1 class="text-5xl md:text-8xl font-black text-white uppercase italic tracking-tighter mb-4">
+      GYM <span class="text-orange-600">CONNECT</span>
+    </h1>
+    <p class="text-gray-300 text-lg md:text-xl max-w-2xl mx-auto mb-8 font-medium">
+      Lleva tu entrenamiento al siguiente nivel con las mejores clases dirigidas.
+    </p>
+    <button routerLink="/clases" class="bg-orange-600 hover:bg-orange-700 text-white font-black py-4 px-10 rounded-full uppercase tracking-widest transition-all transform hover:scale-105 shadow-xl shadow-orange-600/20">
+      Explorar Clases
+    </button>
+  </div>
+</section>
+
+<section class="py-16 px-4 max-w-7xl mx-auto">
+  <div class="flex justify-between items-end mb-10">
+    <div>
+      <h2 class="text-orange-600 font-bold uppercase tracking-[0.3em] text-sm mb-2">Próximas Sesiones</h2>
+      <h3 class="text-4xl font-black text-white uppercase">Entrena Ahora</h3>
+    </div>
+    <a routerLink="/clases" class="text-gray-400 hover:text-white font-bold border-b-2 border-orange-600 pb-1 transition-all">
+      Ver todo el horario
+    </a>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    
+    <div *ngFor="let clase of clases" 
+         class="bg-[#1a1a1a] rounded-3xl overflow-hidden border border-gray-800 hover:border-orange-600/50 transition-all group cursor-pointer shadow-2xl">
+      
+      <div class="relative h-48 overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=2070" 
+             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 opacity-80">
+        <span class="absolute top-4 left-4 bg-orange-600 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase">
+          {{ clase.disciplina }}
+        </span>
+      </div>
+
+      <div class="p-6">
+        <h3 class="text-2xl font-bold text-white mb-4 uppercase italic">{{ clase.nombre }}</h3>
+        
+        <div class="space-y-3 mb-6">
+          <div class="flex items-center text-gray-400">
+            <mat-icon class="!text-sm !w-4 !h-4 mr-2 text-orange-600">schedule</mat-icon>
+            <span class="text-sm font-medium">{{ clase.fecha }}</span>
+          </div>
+
+          <div class="flex items-center text-gray-400">
+            <mat-icon class="!text-sm !w-4 !h-4 mr-2 text-orange-600">person</mat-icon>
+            <span class="text-sm font-medium">{{ clase.instructor }}</span>
+          </div>
+        </div>
+
+        <div class="flex justify-between items-center border-t border-gray-800 pt-5">
+          <div class="flex flex-col">
+            <span class="text-[10px] text-gray-500 uppercase font-bold tracking-tighter">Cupos disponibles</span>
+            <span class="text-green-500 font-black text-lg">{{ clase.capacidad }}</span>
+          </div>
+          
+          <button [routerLink]="['/clase', clase.id]" 
+                  class="bg-white text-black font-black px-5 py-2 rounded-xl text-xs hover:bg-orange-600 hover:text-white transition-all active:scale-95 uppercase tracking-wider">
+            Detalles
+          </button>
+        </div>
+      </div>
+
+    </div> </div>
+</section>
