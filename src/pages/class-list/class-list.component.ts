@@ -14,7 +14,7 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-listado-clases',
   standalone: true,
   imports: [CommonModule, RouterLink, MatIconModule, MatFormFieldModule, MatSelectModule, MatInputModule, MatButtonModule, MatCardModule, FormsModule],
-  templateUrl: './class-list.component.html', // REVISA QUE EL ARCHIVO SE LLAME ASÍ
+  templateUrl: './class-list.component.html', 
   styleUrl: './class-list.component.css'
 })
 export class ListadoClasesComponent implements OnInit {
