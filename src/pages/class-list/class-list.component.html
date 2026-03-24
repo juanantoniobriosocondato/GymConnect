@@ -89,10 +89,11 @@
       <table class="w-full text-left border-collapse">
         <thead>
           <tr class="bg-[#1a1a1a] text-gray-400 uppercase text-[10px] font-black tracking-widest border-b border-gray-800">
-            <th class="p-6">Clase</th>
-            <th class="p-6">Instructor</th>
-            <th class="p-6">Capacidad</th>
-            <th class="p-6 text-right">Acciones</th>
+            <th class="p-6"><mat-icon class="mr-3 text-orange-600">self_improvement</mat-icon>Clase</th>
+            <th class="p-6"><mat-icon class="mr-3 text-orange-600">person</mat-icon>Instructor</th>
+            <th class="p-6"><mat-icon class="mr-3 text-orange-600">group</mat-icon>Capacidad</th>
+            <th class="p-6"><mat-icon class="mr-3 text-orange-600">schedule</mat-icon>Fecha y hora</th>
+            <th class="p-6 text-right"><mat-icon class="mr-3 text-orange-600">menu</mat-icon>Acciones</th>
           </tr>
         </thead>
         <tbody class="text-gray-300">
@@ -100,6 +101,7 @@
             <td class="p-6 font-bold text-white uppercase italic">{{clase.nombre}}</td>
             <td class="p-6"><span>{{ getNombreInstructor(clase.instructorId) }}</span></td>
             <td class="p-6 font-black text-orange-500">{{clase.capacidad}}</td>
+            <td class="p-6"><span>{{ clase.fecha | date:'short' }}</span></td>
             <td class="p-6 text-right">
               <div class="flex justify-end gap-2">
                 <button [routerLink]="['/clase', clase.id]" class="bg-white text-black font-black px-6 py-2.5 rounded-xl text-xs hover:bg-orange-600 hover:text-white transition-all uppercase">Reservar</button>

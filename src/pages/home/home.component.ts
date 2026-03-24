@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common'; // Para el *ngFor
 import { RouterLink, RouterModule } from '@angular/router'; // Para el routerLink de las tarjetas
 import { MatIconModule } from '@angular/material/icon';
 import { ClassService } from '../../services/class.services';
+import { InstructorService } from '../../services/instructor.service';
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -15,7 +16,7 @@ export class HomeComponent implements OnInit {
   clases: any[] = [];
 
   // 2. Inyectamos el servicio en el constructor
-  constructor(private classService: ClassService) {}
+  constructor(private classService: ClassService, private instructorService: InstructorService) {}
 
   ngOnInit(): void {
     // 3. Llamamos al servicio al iniciar
@@ -29,4 +30,10 @@ export class HomeComponent implements OnInit {
       }
     });
   }
+  /*
+  getNombreInstructor(id: string): string {
+  const instructor = this.instructores.find(i => i.id === id);
+  return instructor ? instructor.nomApe : 'Sin asignar';
+}
+  */
 }
