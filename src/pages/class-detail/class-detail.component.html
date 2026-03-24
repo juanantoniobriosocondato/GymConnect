@@ -1,1 +1,58 @@
-<p>class-detail works!</p>
+<div class="min-h-screen bg-[#0a0a0a] text-white pt-24 px-6" *ngIf="clase">
+  <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
+    
+    <div class="relative group">
+      <div class="absolute -inset-1 bg-gradient-to-r from-orange-600 to-red-600 rounded-2xl blur opacity-25"></div>
+      <img [src]="clase.instructor?.imagen" 
+           class="relative rounded-2xl w-full h-[500px] object-cover border border-gray-800">
+      <div class="absolute bottom-6 left-6">
+        <h2 class="text-3xl font-black italic uppercase">{{ clase.instructor?.nomApe }}</h2>
+        <p class="text-orange-500 font-bold tracking-widest uppercase text-sm">{{ clase.instructor?.especialidad }}</p>
+      </div>
+    </div>
+
+    <div class="flex flex-col justify-center">
+      <span class="text-orange-600 font-black uppercase tracking-tighter text-sm mb-2">
+        {{ clase.disciplina }}
+      </span>
+      <h1 class="text-5xl font-black uppercase italic mb-6 leading-none">
+        {{ clase.nombre }}
+      </h1>
+
+      <div class="space-y-6 mb-10">
+        <div class="flex items-center gap-4">
+          <mat-icon class="text-orange-600">calendar_today</mat-icon>
+          <div>
+            <p class="text-gray-500 text-xs uppercase font-bold">Fecha y Hora</p>
+            <p class="text-lg font-medium">{{ clase.fecha | date:'fullDate' }} - {{ clase.fecha | date:'shortTime' }}</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-4">
+          <mat-icon class="text-orange-600">timer</mat-icon>
+          <div>
+            <p class="text-gray-500 text-xs uppercase font-bold">Duración</p>
+            <p class="text-lg font-medium">{{ clase.duracion }} minutos</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-4">
+          <mat-icon class="text-orange-600">groups</mat-icon>
+          <div>
+            <p class="text-gray-500 text-xs uppercase font-bold">Cupos Disponibles</p>
+            <p class="text-lg font-medium">{{ clase.capacidad }} plazas restantes</p>
+          </div>
+        </div>
+      </div>
+
+      <button (click)="reservar()" 
+        class="bg-orange-600 hover:bg-orange-700 text-white font-black py-4 rounded-xl ...">
+            Confirmar Reserva
+    </button>
+      
+      <a routerLink="/clases" class="text-center mt-6 text-gray-500 hover:text-white text-sm underline cursor-pointer">
+        Volver al horario
+      </a>
+    </div>
+  </div>
+</div>

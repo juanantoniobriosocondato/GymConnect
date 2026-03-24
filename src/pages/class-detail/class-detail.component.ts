@@ -1,12 +1,72 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router'; 
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { ClassService } from '../../services/class.services';
+import { AuthService } from '../../services/auth.service'; 
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-class-detail',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, MatIconModule, MatButtonModule, RouterLink],
   templateUrl: './class-detail.component.html',
   styleUrl: './class-detail.component.css'
 })
-export class ClassDetailComponent {
+export class ClassDetailComponent implements OnInit {
+  claseId: string | null = null;
+  clase: any = null;
 
+  constructor(
+    private route: ActivatedRoute,
+    private http: HttpClient,
+    private router: Router, 
+    private classService: ClassService,
+    public authService: AuthService 
+  ) {}
+
+  ngOnInit(): void {
+  // Asegúrate de que el nombre del parámetro coincida con el de app.routes.ts (ej: :id)
+  this.claseId = this.route.snapshot.paramMap.get('id');
+  
+  if (!this.claseId) {
+    console.error("No se encontró el ID en la URL");
+  } else {
+    this.cargarClase();
+  }
+}
+
+  cargarClase() {
+    if (this.claseId) {
+      this.http.get(`https://localhost:7127/api/Clase/${this.claseId}`)
+        .subscribe(data => this.clase = data);
+    }
+  }
+
+  reservar() {
+  const usuarioId = this.authService.currentUserValue?.id;
+  
+  // Validamos que existan AMBOS IDs antes de seguir
+  if (!this.claseId || this.claseId === 'null') {
+    alert("Error: ID de clase no válido.");
+    return;
+  }
+  if (!usuarioId) {
+    alert("Debes iniciar sesión.");
+    return;
+  }
+
+  this.http.post(`https://localhost:7127/api/Clase/${this.claseId}/reservar`, { 
+    usuarioId: usuarioId 
+  }).subscribe({
+    next: () => {
+      alert("¡Reserva realizada!");
+      this.cargarClase();
+    },
+    error: (err) => {
+      console.error("Error en reserva:", err);
+    }
+  });
+}
 }

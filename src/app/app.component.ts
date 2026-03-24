@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { NavbarComponent } from './components/navbar/navbar.component';
+// Asegúrate de que el nombre de la clase sea exactamente el que pusiste en su archivo
+import { NavBarComponent } from './components/navbar/navbar.component'; 
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NavbarComponent],
+  // Aquí también debe coincidir
+  imports: [RouterOutlet, NavBarComponent], 
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

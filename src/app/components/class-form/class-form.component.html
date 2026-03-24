@@ -1,0 +1,48 @@
+<div class="bg-[#1a1a1a] p-8 rounded-3xl border border-gray-800 max-w-2xl mx-auto">
+  <h2 class="text-2xl font-black text-white uppercase italic mb-6">
+    {{ editMode ? 'Editar' : 'Nueva' }} <span class="text-orange-600">Clase</span>
+  </h2>
+
+  <form [formGroup]="classForm" (ngSubmit)="guardar()" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <mat-form-field appearance="outline" class="col-span-2">
+      <mat-label>Nombre de la clase</mat-label>
+      <input matInput formControlName="nombre" placeholder="Ej: Power WOD">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Disciplina</mat-label>
+      <mat-select formControlName="disciplina">
+        <mat-option value="Crossfit">Crossfit</mat-option>
+        <mat-option value="Yoga">Yoga</mat-option>
+        <mat-option value="Zumba">Zumba</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Instructor</mat-label>
+      <mat-select formControlName="instructorId">
+        <mat-option *ngFor="let ins of instructores" [value]="ins.id">
+          {{ ins.nomApe }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Fecha y Hora</mat-label>
+      <input matInput type="datetime-local" formControlName="fecha">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Capacidad Máxima</mat-label>
+      <input matInput type="number" formControlName="capacidad">
+    </mat-form-field>
+
+    <div class="col-span-2 flex justify-end gap-4 mt-4">
+      <button type="button" (click)="cancelar()" class="text-gray-400 uppercase text-xs font-bold">Cancelar</button>
+      <button type="submit" [disabled]="classForm.invalid" 
+              class="bg-orange-600 text-white px-8 py-3 rounded-xl font-black uppercase text-xs hover:bg-orange-700 disabled:opacity-50">
+        {{ editMode ? 'Actualizar' : 'Crear Clase' }}
+      </button>
+    </div>
+  </form>
+</div>
