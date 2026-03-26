@@ -12,6 +12,8 @@ import { ClassService } from '../../services/class.services';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service'; 
 import { InstructorService } from '../../services/instructor.service';
+import { UserService } from '../../services/user.service';
+import { UiService } from '../../services/ui.service';
 
 @Component({
   selector: 'app-listado-clases',
@@ -23,6 +25,9 @@ import { InstructorService } from '../../services/instructor.service';
 export class ListadoClasesComponent implements OnInit {
   clases: any[] = [];
   instructores: any[] = [];
+  usuariosGlobales: any[] = []; 
+  asistentesDetalle: any[] = []; 
+  claseSeleccionadaNombre: string = '';
   // Variables para los filtros
   disciplinaSeleccionada: string = ''; 
   diaSeleccionado: string = '';
@@ -34,11 +39,12 @@ export class ListadoClasesComponent implements OnInit {
   public authService: AuthService,
   private classService: ClassService,
   private router: Router,
-  private instructorService: InstructorService 
+  private instructorService: InstructorService,
+  private userService: UserService,
+  private uiService: UiService
 ) {}
 
 cargarInstructores() {
-  // Cambia this.classService por this.instructorService
   this.instructorService.getInstructores().subscribe(data => {
     this.instructores = data;
   });
@@ -47,10 +53,10 @@ cargarInstructores() {
   ngOnInit(): void {
     this.cargarClases();
     this.cargarListaInstructores();
+    this.userService.getAll().subscribe(data => this.usuariosGlobales = data);
   }
 
   cargarClases(): void {
-  // Ahora llamamos al servicio pasando las variables que están enlazadas con [(ngModel)]
   this.classService.getClases(
     this.disciplinaSeleccionada, 
     this.instructorSeleccionado, 
@@ -121,7 +127,7 @@ eliminarClase(id: string) {
       },
       error: (err) => {
         console.error('Error al eliminar:', err);
-        alert('No se pudo eliminar la clase. Verifica si tiene dependencias.');
+        this.uiService.mostrarMensaje('No se pudo eliminar la clase. Verifica si tiene dependencias.');
       }
     });
   }
@@ -131,6 +137,22 @@ getNombreInstructor(id: string): string {
   const instructor = this.instructores.find(i => i.id === id);
   return instructor ? instructor.nomApe : 'Sin asignar';
 }
+
+verAsistentes(clase: any) {
+    this.claseSeleccionadaNombre = clase.nombre;
+    
+    if (!clase.alumnosIds || clase.alumnosIds.length === 0) {
+      this.uiService.mostrarMensaje('Esta clase aún no tiene reservas.');
+      this.asistentesDetalle = [];
+      return;
+    }
+
+    // Cruzamos los IDs de la clase con los objetos de usuariosGlobales
+    this.asistentesDetalle = clase.alumnosIds.map((id: string) => {
+      return this.usuariosGlobales.find(u => u.id === id) || 
+             { nombre: 'Usuario no encontrado', email: id };
+    });
+  }
 
   isAdmin(): boolean{
     return this.authService.currentUserValue?.rol === 'Administrador'

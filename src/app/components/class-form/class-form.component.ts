@@ -13,6 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
 // Servicios
 import { ClassService } from '../../../services/class.services'; // Revisa que la ruta sea correcta
 import { InstructorService } from '../../../services/instructor.service';
+import { UiService } from '../../../services/ui.service';
 
 @Component({
   selector: 'app-class-form',
@@ -39,7 +40,8 @@ export class ClassFormComponent implements OnInit {
     private classService: ClassService,
     private instructorService: InstructorService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private uiService: UiService
   ) {
     this.classForm = this.fb.group({
       nombre: ['', [Validators.required, Validators.minLength(3)]],
@@ -94,7 +96,7 @@ export class ClassFormComponent implements OnInit {
     
     this.classService.updateAsync(datosParaActualizar).subscribe({
       next: () => {
-        alert('Clase actualizada con éxito');
+        this.uiService.mostrarMensaje('Clase actualizada con éxito');
         this.router.navigate(['/clases']);
       },
       error: (err) => console.error('Error al actualizar:', err)
@@ -105,7 +107,7 @@ export class ClassFormComponent implements OnInit {
     
     this.classService.createAsync(datosClase).subscribe({
       next: () => {
-        alert('Clase creada con éxito');
+        this.uiService.mostrarMensaje('Clase creada con éxito');
         this.router.navigate(['/clases']);
       },
       error: (err) => console.error('Error al crear:', err)

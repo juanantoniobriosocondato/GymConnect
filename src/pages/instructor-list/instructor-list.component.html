@@ -1,0 +1,63 @@
+<div class="animate-in fade-in slide-in-from-bottom-4 duration-700">
+  <div class="flex justify-between items-center mb-8">
+    <div>
+      <h2 class="text-3xl font-black text-white uppercase italic">Gestión de <span class="text-orange-600">Instructores</span></h2>
+      <p class="text-gray-500 text-sm">Administra el equipo de coaches de GymConnect</p>
+    </div>
+    
+    <button routerLink="/admin/instructores/nuevo" 
+            class="bg-orange-600 hover:bg-orange-700 text-white font-black px-6 py-3 rounded-xl uppercase text-xs transition-all shadow-lg shadow-orange-600/20 flex items-center gap-2">
+      <mat-icon>add</mat-icon> Nuevo Coach
+    </button>
+  </div>
+
+  <div class="bg-[#1a1a1a] border border-gray-800 rounded-3xl overflow-hidden shadow-2xl">
+    <table class="w-full text-left border-collapse">
+      <thead>
+        <tr class="bg-[#111] border-b border-gray-800">
+          <th class="p-5 text-[10px] font-black text-gray-500 uppercase tracking-widest">Coach</th>
+          <th class="p-5 text-[10px] font-black text-gray-500 uppercase tracking-widest">Especialidad</th>
+          <th class="p-5 text-[10px] font-black text-gray-500 uppercase tracking-widest text-center">Acciones</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-800">
+        <tr *ngFor="let ins of instructores" class="hover:bg-white/[0.02] transition-colors group">
+          <td class="p-5">
+            <div class="flex items-center gap-4">
+              <img [src]="ins.imagen || 'https://via.placeholder.com/150'" 
+                   class="w-12 h-12 rounded-full object-cover border-2 border-gray-800 group-hover:border-orange-600 transition-all">
+              <div>
+                <p class="text-white font-bold">{{ ins.nomApe }}</p>
+                <p class="text-gray-500 text-xs">{{ ins.email }}</p>
+              </div>
+            </div>
+          </td>
+          <td class="p-5">
+            <span class="bg-gray-800 text-gray-300 text-[10px] px-3 py-1 rounded-full uppercase font-bold border border-gray-700">
+              {{ ins.especialidad }}
+            </span>
+          </td>
+          <td class="p-5">
+            <div class="flex justify-center gap-3">
+              <button [routerLink]="['/admin/editar-instructor', ins.id]" 
+                      class="p-2 text-gray-400 hover:text-blue-500 hover:bg-blue-500/10 rounded-lg transition-all" 
+                      title="Editar">
+                <mat-icon class="!text-lg">edit</mat-icon>
+              </button>
+              <button (click)="eliminar(ins.id)" 
+                      class="p-2 text-gray-400 hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-all" 
+                      title="Eliminar">
+                <mat-icon class="!text-lg">delete</mat-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <div *ngIf="instructores.length === 0" class="p-20 text-center">
+      <mat-icon class="text-gray-700 !text-6xl !w-16 !h-16 mb-4">group_off</mat-icon>
+      <p class="text-gray-500 font-bold uppercase tracking-widest text-sm">No hay instructores registrados</p>
+    </div>
+  </div>
+</div>

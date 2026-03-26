@@ -1,0 +1,43 @@
+<div class="animate-in fade-in duration-700">
+  <div class="mb-8">
+    <h2 class="text-3xl font-black text-white uppercase italic">Listado de <span class="text-orange-600">Usuarios</span></h2>
+    <p class="text-gray-500 text-sm">Gestiona los clientes registrados en GymConnect</p>
+  </div>
+
+  <div class="mb-6 relative max-w-md">
+    <mat-icon class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">search</mat-icon>
+    <input [(ngModel)]="filtroNombre" type="text" placeholder="Buscar por nombre o email..." 
+           class="w-full bg-[#1a1a1a] border border-gray-800 rounded-2xl py-4 pl-12 pr-4 text-white focus:border-orange-600 outline-none transition-all">
+  </div>
+
+  <div class="bg-[#1a1a1a] border border-gray-800 rounded-3xl overflow-hidden shadow-2xl">
+    <table class="w-full text-left border-collapse">
+      <thead>
+        <tr class="bg-[#111] border-b border-gray-800 text-[10px] font-black text-gray-500 uppercase tracking-widest">
+          <th class="p-5">Usuario</th>
+          <th class="p-5">Email</th>
+          <th class="p-5">Rol</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-800">
+        <tr *ngFor="let user of usuariosFiltrados" class="hover:bg-white/[0.02] transition-colors group">
+          <td class="p-5">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-orange-600 to-orange-400 flex items-center justify-center text-white font-black italic">
+                {{ user.nombre.charAt(0) }}
+              </div>
+              <span class="text-white font-bold">{{ user.nombre }}</span>
+            </div>
+          </td>
+          <td class="p-5 text-gray-400 text-sm">{{ user.email }}</td>
+          <td class="p-5">
+            <span [ngClass]="user.rol === 'Administrador' ? 'bg-orange-600/20 text-orange-500 border-orange-600/30' : 'bg-blue-600/20 text-blue-500 border-blue-600/30'"
+                  class="text-[9px] px-3 py-1 rounded-full uppercase font-black border">
+              {{ user.rol }}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

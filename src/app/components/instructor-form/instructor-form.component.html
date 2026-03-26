@@ -1,76 +1,40 @@
-<div class="min-h-screen bg-[#0a0a0a] pt-28 px-6 pb-20">
-  <div class="max-w-4xl mx-auto">
-    
-    <div class="flex items-center gap-4 mb-8">
-      <button routerLink="/clases" class="text-gray-500 hover:text-white transition-colors">
-        <mat-icon>arrow_back</mat-icon>
-      </button>
-      <h1 class="text-3xl font-black text-white uppercase italic">
-        Gestión de <span class="text-orange-600">Instructores</span>
-      </h1>
-    </div>
+<div class="min-h-screen bg-[#0a0a0a] pt-32 pb-12 px-6">
+  <div class="max-w-2xl mx-auto bg-[#1a1a1a] rounded-3xl p-8 border border-gray-800 shadow-2xl">
+    <h2 class="text-3xl font-black text-white uppercase italic mb-8">
+  {{ isEditMode ? 'Editar' : 'Registrar' }} 
+  <span class="text-orange-600">Instructor</span>
+</h2>
 
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-      
-      <div class="lg:col-span-2 bg-[#111] border border-gray-800 p-8 rounded-3xl shadow-2xl">
-        <form [formGroup]="instForm" (ngSubmit)="guardarInstructor()" class="space-y-6">
-          
-          <mat-form-field appearance="outline" class="w-full">
-            <mat-label>Nombre Completo</mat-label>
-            <input matInput formControlName="nomApe" placeholder="Ej: Alex Johnson">
-            <mat-icon matSuffix>badge</mat-icon>
-          </mat-form-field>
+<button type="submit" ...>
+  {{ isEditMode ? 'Actualizar Cambios' : 'Guardar Instructor' }}
+</button>
 
-          <mat-form-field appearance="outline" class="w-full">
-            <mat-label>Especialidad Principal</mat-label>
-            <mat-select formControlName="especialidad">
-              <mat-option value="Crossfit">Crossfit Specialist</mat-option>
-              <mat-option value="Yoga">Yoga Master</mat-option>
-              <mat-option value="Zumba">Zumba Instructor</mat-option>
-              <mat-option value="Musculación">Personal Trainer</mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline" class="w-full">
-            <mat-label>URL de la Foto (Link)</mat-label>
-            <input matInput formControlName="fotoUrl" placeholder="https://ejemplo.com/foto.jpg">
-            <mat-icon matSuffix>link</mat-icon>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline" class="w-full">
-            <mat-label>Biografía corta</mat-label>
-            <textarea matInput formControlName="bio" rows="4" placeholder="Cuéntanos un poco sobre su experiencia..."></textarea>
-          </mat-form-field>
-
-          <div class="flex justify-end gap-4 pt-4">
-            <button type="button" routerLink="/clases" class="text-gray-500 font-bold uppercase text-xs tracking-widest">Descartar</button>
-            <button type="submit" [disabled]="instForm.invalid" 
-                    class="bg-white text-black font-black px-10 py-4 rounded-xl uppercase text-sm hover:bg-orange-600 hover:text-white transition-all shadow-xl">
-              Guardar Perfil
-            </button>
-          </div>
-        </form>
+    <form [formGroup]="instructorForm" (ngSubmit)="guardar()" class="space-y-6">
+      <div>
+        <label class="text-[10px] text-gray-500 uppercase font-black mb-2 block">Nombre y Apellido</label>
+        <input formControlName="nomApe" type="text" class="w-full bg-[#111] border border-gray-800 rounded-xl p-4 text-white focus:border-orange-600 outline-none transition-all">
       </div>
 
-      <div class="flex flex-col gap-4 text-center">
-        <p class="text-gray-500 uppercase text-[10px] font-black tracking-widest">Vista Previa</p>
-        <div class="bg-[#1a1a1a] border border-gray-800 rounded-3xl overflow-hidden shadow-2xl group">
-          <div class="h-64 bg-[#222] overflow-hidden">
-            <img [src]="instForm.get('fotoUrl')?.value || 'https://via.placeholder.com/400x600?text=SIN+FOTO'" 
-                 class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500">
-          </div>
-          <div class="p-6">
-            <h3 class="text-white font-black uppercase italic text-xl">
-              {{ instForm.get('nomApe')?.value || 'Nombre Coach' }}
-            </h3>
-            <p class="text-orange-600 font-bold text-xs uppercase tracking-tighter">
-              {{ instForm.get('especialidad')?.value || 'Especialidad' }}
-            </p>
-          </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label class="text-[10px] text-gray-500 uppercase font-black mb-2 block">Especialidad</label>
+          <input formControlName="especialidad" type="text" placeholder="Ej: HIIT, Yoga..." class="w-full bg-[#111] border border-gray-800 rounded-xl p-4 text-white focus:border-orange-600 outline-none transition-all">
         </div>
-        <p class="text-gray-600 text-xs italic px-4">Esta es la apariencia que verán los usuarios en el listado.</p>
+        <div>
+          <label class="text-[10px] text-gray-500 uppercase font-black mb-2 block">Email de Contacto</label>
+          <input formControlName="email" type="email" class="w-full bg-[#111] border border-gray-800 rounded-xl p-4 text-white focus:border-orange-600 outline-none transition-all">
+        </div>
       </div>
 
-    </div>
+      <div>
+        <label class="text-[10px] text-gray-500 uppercase font-black mb-2 block">URL Imagen (Opcional)</label>
+        <input formControlName="imagen" type="text" class="w-full bg-[#111] border border-gray-800 rounded-xl p-4 text-white focus:border-orange-600 outline-none transition-all">
+      </div>
+
+      <div class="flex gap-4 pt-6">
+        <button type="button" routerLink="/perfil/gestion-instructores" class="flex-1 bg-gray-800 text-white font-black py-4 rounded-xl uppercase text-xs hover:bg-gray-700 transition-all">Cancelar</button>
+        <button type="submit" [disabled]="instructorForm.invalid" class="flex-1 bg-orange-600 text-white font-black py-4 rounded-xl uppercase text-xs hover:bg-orange-700 transition-all disabled:opacity-50">Guardar Instructor</button>
+      </div>
+    </form>
   </div>
 </div>

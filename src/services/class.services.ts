@@ -67,4 +67,9 @@ export class ClassService {
   cancelarReserva(claseId: string, usuarioId: string): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${claseId}/reservar/${usuarioId}`);
   }
+
+  // 9. Obtener usuarios por clase
+  GetUsuariosByClase(claseId: string, usuarioId: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/${claseId}/reservar/${usuarioId}`)
+  }
 }

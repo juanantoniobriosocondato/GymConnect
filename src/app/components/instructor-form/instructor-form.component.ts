@@ -1,64 +1,69 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common'; // Necesario para *ngIf y [src]
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
-
-// Angular Material Imports
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-
 import { InstructorService } from '../../../services/instructor.service';
+import { CommonModule } from '@angular/common';
+import { UiService } from '../../../services/ui.service';
 
 @Component({
   selector: 'app-instructor-form',
-  templateUrl: './instructor-form.component.html',
   standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    RouterModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatIconModule,
-    MatButtonModule
-  ]
+  imports: [ReactiveFormsModule, CommonModule, RouterModule],
+  templateUrl: './instructor-form.component.html'
 })
 export class InstructorFormComponent implements OnInit {
-  instForm: FormGroup;
+  instructorForm: FormGroup;
+  isEditMode = false;
+  instructorId: string | null = null;
 
   constructor(
     private fb: FormBuilder,
-    private instructorService: InstructorService, // Servicio inyectado correctamente
-    private router: Router
+    private instructorService: InstructorService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private uiService: UiService
   ) {
-    this.instForm = this.fb.group({
-      nomApe: ['', [Validators.required, Validators.minLength(3)]],
-      especialidad: ['', Validators.required],
-      bio: [''],
-      fotoUrl: [''] 
+    this.instructorForm = this.fb.group({
+      nomApe: ['', Validators.required],
+      especialidad: [''],
+      email: ['', [Validators.required, Validators.email]],
+      imagen: ['https://images.unsplash.com/photo-1594381898411-846e7d193883?q=80&w=500']
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // Comprobar si recibimos un ID por parámetro
+    this.instructorId = this.route.snapshot.paramMap.get('id');
+    if (this.instructorId) {
+      this.isEditMode = true;
+      this.instructorService.getById(this.instructorId).subscribe({
+        next: (instructor) => this.instructorForm.patchValue(instructor),
+        error: (err) => console.error('Error al cargar instructor', err)
+      });
+    }
+  }
 
-  guardarInstructor() {
-    if (this.instForm.valid) {
-      this.instructorService.create(this.instForm.value).subscribe({
+  guardar() {
+    if (this.instructorForm.invalid) return;
+
+    const datos = this.instructorForm.value;
+
+    if (this.isEditMode && this.instructorId) {
+      // MODO EDITAR
+      this.instructorService.update(this.instructorId, { ...datos, id: this.instructorId }).subscribe({
         next: () => {
-          alert('¡Instructor guardado con éxito!');
-          this.router.navigate(['/clases']);
-        },
-        error: (err) => {
-          console.error('Error al guardar:', err);
-          alert('No se pudo guardar el instructor. Revisa la consola.');
+          this.uiService.mostrarMensaje('Instructor actualizado correctamente');
+          this.router.navigate(['/perfil/gestion-instructores']);
         }
       });
     } else {
-      alert('Por favor, rellena todos los campos obligatorios.');
+      // MODO CREAR
+      this.instructorService.create(datos).subscribe({
+        next: () => {
+          this.uiService.mostrarMensaje('Instructor creado correctamente');
+          this.router.navigate(['/perfil/gestion-instructores']);
+        }
+      });
     }
   }
 }

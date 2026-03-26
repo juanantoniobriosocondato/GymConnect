@@ -4,14 +4,6 @@
   <span class="spacer"></span>
 
   <div class="nav-links">
-    <!--<a mat-button routerLink="/clases">Clases</a>-->
-    <a *ngIf="authService.isLoggedIn()" 
-     routerLink="/mis-reservas" 
-     routerLinkActive="text-orange-600"
-     class="text-white uppercase font-black italic tracking-tighter hover:text-orange-600 transition-colors flex items-center gap-2">
-    <span class="w-2 h-2 bg-orange-600 rounded-full animate-pulse"></span>
-    Mis Reservas
-    </a>
 
     <ng-container *ngIf="!authService.isLoggedIn()">
       <a mat-raised-button color="accent" routerLink="/login">
@@ -20,10 +12,25 @@
     </ng-container>
 
     <ng-container *ngIf="authService.isLoggedIn()">
-      <span class="user-name">Hola, {{ authService.getUserName() }}</span>
-      <button mat-stroked-button color="warn" (click)="onLogout()">
-        Cerrar Sesión
-      </button>
+      <div *ngIf="authService.isLoggedIn()" class="flex items-center gap-4">
+  <button routerLink="/perfil" 
+          class="group flex items-center gap-3 bg-gray-900/50 hover:bg-orange-600/10 border border-gray-800 hover:border-orange-600/50 px-4 py-2 rounded-full transition-all duration-300">
+    
+    <div class="w-8 h-8 bg-orange-600 rounded-full flex items-center justify-center text-white font-black text-xs italic group-hover:scale-110 transition-transform">
+      {{ authService.currentUserValue?.nombre?.charAt(0) }}
+    </div>
+
+    <div class="hidden md:block text-left">
+      <p class="text-[10px] text-gray-500 uppercase font-black leading-none mb-1">Mi Cuenta</p>
+      <p class="text-sm text-white font-bold leading-none">
+        Hola, <span class="group-hover:text-orange-500 transition-colors">{{ authService.currentUserValue?.nombre }}</span>
+      </p>
+    </div>
+
+    <mat-icon class="text-gray-600 group-hover:text-orange-600 !text-sm !w-4 !h-4">chevron_right</mat-icon>
+  </button>
+</div>
+      
     </ng-container>
   </div>
 </mat-toolbar>

@@ -23,6 +23,10 @@ export class InstructorService {
     return this.http.get<Instructor[]>(this.apiUrl);
   }
 
+  getAll(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl);
+  }
+
   // Obtener un instructor por su ID
   getById(id: string): Observable<Instructor> {
     return this.http.get<Instructor>(`${this.apiUrl}/${id}`);

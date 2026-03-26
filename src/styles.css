@@ -5,3 +5,21 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+/* En styles.css */
+.snack-exito {
+  --mdc-snackbar-container-color: #1a1a1a !important;
+  --mdc-snackbar-supporting-text-color: #ffffff !important;
+  border: 1px solid #4ade80; /* Verde éxito */
+}
+
+.snack-error {
+  --mdc-snackbar-container-color: #1a1a1a !important;
+  --mdc-snackbar-supporting-text-color: #ffffff !important;
+  border: 1px solid #dc2626; /* Rojo error */
+  font-weight: bold;
+}
+
+/* Color del botón "Cerrar" */
+.mat-mdc-snack-bar-action button {
+  color: #ea580c !important; /* Tu naranja */
+}

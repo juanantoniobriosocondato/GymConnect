@@ -1,0 +1,79 @@
+<div class="flex  bg-[#0a0a0a] ">
+  
+  <aside class="w-72 bg-[#111] border-r border-gray-800 flex flex-col p-6 sticky top-20 h-[calc(100vh-5rem)] shadow-2xl">
+    
+    <div class="mb-8">
+      <h2 class="text-gray-500 font-black uppercase tracking-[0.2em] text-[10px] mb-4 px-3">Mi Actividad</h2>
+      <nav class="space-y-1">
+        <a routerLink="/perfil/reservas" routerLinkActive="bg-orange-600/10 text-orange-500 border-r-2 border-orange-600"
+           class="flex items-center gap-3 text-gray-400 hover:text-white hover:bg-white/5 p-3 rounded-xl transition-all group">
+          <mat-icon class="!text-lg">event_available</mat-icon>
+          <span class="font-bold uppercase text-[11px] tracking-wider">Mis Reservas</span>
+        </a>
+        <a routerLink="/clases" 
+           class="flex items-center gap-3 text-gray-400 hover:text-white hover:bg-white/5 p-3 rounded-xl transition-all group">
+          <mat-icon class="!text-lg">calendar_month</mat-icon>
+          <span class="font-bold uppercase text-[11px] tracking-wider">Calendario</span>
+        </a>
+      </nav>
+    </div>
+
+    <div *ngIf="isAdmin()" class="mb-8">
+      <div class="h-[1px] bg-gray-800 mb-6 mx-3"></div>
+      <h2 class="text-orange-600 font-black uppercase tracking-[0.2em] text-[10px] mb-4 px-3">Panel de Control</h2>
+      
+      <nav class="space-y-1">
+        <a routerLink="/perfil/gestion-instructores" routerLinkActive="bg-orange-600/10 text-orange-500 border-r-2 border-orange-600"
+           class="flex items-center gap-3 text-gray-400 hover:text-white hover:bg-white/5 p-3 rounded-xl transition-all group">
+          <mat-icon class="!text-lg">badge</mat-icon>
+          <span class="font-bold uppercase text-[11px] tracking-wider">Gestión de Instructores</span>
+        </a>
+
+        <a routerLink="/clases" routerLinkActive="bg-orange-600/10 text-orange-500 border-r-2 border-orange-600"
+           class="flex items-center gap-3 text-gray-400 hover:text-white hover:bg-white/5 p-3 rounded-xl transition-all group">
+          <mat-icon class="!text-lg">settings_suggest</mat-icon>
+          <span class="font-bold uppercase text-[11px] tracking-wider">Configuración de Clases</span>
+        </a>
+
+        <a routerLink="/perfil/usuarios" routerLinkActive="bg-orange-600/10 text-orange-500 border-r-2 border-orange-600"
+           class="flex items-center gap-3 text-gray-400 hover:text-white hover:bg-white/5 p-3 rounded-xl transition-all group">
+          <mat-icon class="!text-lg">group</mat-icon>
+          <span class="font-bold uppercase text-[11px] tracking-wider">Listado de Usuarios</span>
+        </a>
+      </nav>
+    </div>
+
+    <div class="mb-8">
+      <button (click)="onLogout()" 
+            class="mt-auto flex items-center gap-3 text-red-500/70 hover:text-red-500 p-3 rounded-xl hover:bg-red-500/5 transition-all">
+      <mat-icon class="!text-lg">logout</mat-icon>
+      <span class="font-black uppercase text-[10px] tracking-[0.2em]">Cerrar Sesión</span>
+    </button>
+    </div>
+  </aside>
+
+  <main class="flex-grow p-10 overflow-y-auto">
+    
+    <div class="max-w-4xl bg-[#1a1a1a] rounded-3xl p-8 border border-gray-800 mb-10 flex items-center gap-8 shadow-2xl">
+      <div class="w-24 h-24 bg-orange-600 rounded-full flex items-center justify-center text-4xl font-black text-white italic shadow-lg shadow-orange-600/20">
+        {{ authService.currentUserValue?.nombre?.charAt(0) }}
+      </div>
+      <div>
+        <div class="flex items-center gap-4 mb-2">
+          <h1 class="text-4xl font-black text-white uppercase italic tracking-tighter">
+            {{ authService.currentUserValue?.nombre }}
+          </h1>
+          <span *ngIf="isAdmin()" class="bg-orange-600 text-white text-[10px] px-3 py-1 rounded-full font-black uppercase tracking-widest">
+            Admin
+          </span>
+        </div>
+        <p class="text-gray-400 font-medium tracking-wide">{{ authService.currentUserValue?.email }}</p>
+      </div>
+    </div>
+
+    <div class="max-w-6xl">
+      <router-outlet></router-outlet>
+    </div>
+
+  </main>
+</div>

@@ -6,6 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { ClassService } from '../../services/class.services';
 import { AuthService } from '../../services/auth.service'; 
 import { HttpClient } from '@angular/common/http';
+import { UiService } from '../../services/ui.service';
 
 @Component({
   selector: 'app-class-detail',
@@ -23,7 +24,8 @@ export class ClassDetailComponent implements OnInit {
     private http: HttpClient,
     private router: Router, 
     private classService: ClassService,
-    public authService: AuthService 
+    public authService: AuthService,
+    private uiService: UiService
   ) {}
 
   ngOnInit(): void {
@@ -49,11 +51,11 @@ export class ClassDetailComponent implements OnInit {
   
   // Validamos que existan AMBOS IDs antes de seguir
   if (!this.claseId || this.claseId === 'null') {
-    alert("Error: ID de clase no válido.");
+    this.uiService.mostrarMensaje("Error: ID de clase no válido.");
     return;
   }
   if (!usuarioId) {
-    alert("Debes iniciar sesión.");
+    this.uiService.mostrarMensaje("Debes iniciar sesión.");
     return;
   }
 
@@ -61,7 +63,7 @@ export class ClassDetailComponent implements OnInit {
     usuarioId: usuarioId 
   }).subscribe({
     next: () => {
-      alert("¡Reserva realizada!");
+      this.uiService.mostrarMensaje("¡Reserva realizada!");
       this.cargarClase();
     },
     error: (err) => {

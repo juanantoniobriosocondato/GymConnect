@@ -14,26 +14,36 @@ import { InstructorService } from '../../services/instructor.service';
 export class HomeComponent implements OnInit {
   // 1. Declaramos la variable para almacenar las clases
   clases: any[] = [];
+  instructores: any[] = [];
 
   // 2. Inyectamos el servicio en el constructor
   constructor(private classService: ClassService, private instructorService: InstructorService) {}
 
   ngOnInit(): void {
-    // 3. Llamamos al servicio al iniciar
-    this.classService.getClases().subscribe({
-      next: (data) => {
-        // Tomamos solo las primeras 3 clases como pide el PDF
-        this.clases = data.slice(0, 3);
-      },
-      error: (err) => {
-        console.error('Error al cargar clases en el home', err);
-      }
-    });
-  }
-  /*
+  // 1. Cargamos los instructores PRIMERO (o en paralelo)
+  this.instructorService.getAll().subscribe({
+    next: (data) => {
+      this.instructores = data;
+      
+      // 2. Una vez que sabemos quiénes son los instructores, cargamos las clases
+      this.cargarClases();
+    },
+    error: (err) => console.error('Error al cargar instructores', err)
+  });
+}
+
+cargarClases(): void {
+  this.classService.getClases().subscribe({
+    next: (data) => {
+      this.clases = data.slice(0, 3);
+    },
+    error: (err) => console.error('Error al cargar clases en el home', err)
+  });
+}
+  
   getNombreInstructor(id: string): string {
   const instructor = this.instructores.find(i => i.id === id);
   return instructor ? instructor.nomApe : 'Sin asignar';
 }
-  */
+  
 }
