@@ -39,7 +39,12 @@ export class ClassDetailComponent implements OnInit {
 
   ngOnInit(): void {
   // Asegúrate de que el nombre del parámetro coincida con el de app.routes.ts (ej: :id)
+  this.instructorService.getInstructores().subscribe(insts => {
+    this.instructores = insts;
+    this.cargarClase;
+  })
   this.claseId = this.route.snapshot.paramMap.get('id');
+  
   
   if (!this.claseId) {
     console.error("No se encontró el ID en la URL");
