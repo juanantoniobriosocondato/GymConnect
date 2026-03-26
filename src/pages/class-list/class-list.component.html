@@ -32,7 +32,7 @@
           <mat-label>Instructor</mat-label>
           <mat-select [(ngModel)]="instructorSeleccionado" (selectionChange)="cargarClases()">
             <mat-option value="">Cualquier Instructor</mat-option>
-            <mat-option *ngFor="let ins of instructores" [value]="ins.nomApe">{{ ins.nomApe }}</mat-option>
+            <mat-option *ngFor="let ins of instructores" [value]="ins.id">{{ ins.nomApe }}</mat-option>
           </mat-select>
         </mat-form-field>
 
@@ -57,7 +57,7 @@
     <div *ngIf="!isAdmin()" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
       <div *ngFor="let clase of clases" class="bg-[#1a1a1a] rounded-3xl overflow-hidden border border-gray-800 hover:border-orange-600/50 transition-all group flex flex-col shadow-xl">
         <div class="relative h-52 overflow-hidden">
-          <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&w=500" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-70">
+          <img [src]='getImagenInstructor(clase.instructorId)' class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-70">
           <div class="absolute top-4 left-4">
             <span class="bg-orange-600 text-white text-[10px] font-black px-4 py-1.5 rounded-full uppercase">{{ clase.disciplina }}</span>
           </div>

@@ -33,7 +33,7 @@
          class="bg-[#1a1a1a] rounded-3xl overflow-hidden border border-gray-800 hover:border-orange-600/50 transition-all group cursor-pointer shadow-2xl">
       
       <div class="relative h-48 overflow-hidden">
-        <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=2070" 
+        <img [src]='getImagenInstructor(clase.instructorId)'
              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 opacity-80">
         <span class="absolute top-4 left-4 bg-orange-600 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase">
           {{ clase.disciplina }}

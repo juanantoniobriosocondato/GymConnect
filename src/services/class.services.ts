@@ -13,10 +13,11 @@ export class ClassService {
   constructor(private http: HttpClient) { }
 
   // 1. Obtener todas las clases (Listado)
- getClases(disciplina?: string, instructor?: string, dia?: string): Observable<any[]> {
+getClases(disciplina?: string, instructorId?: string, dia?: string): Observable<any[]> {
   let params = new HttpParams();
+
   if (disciplina) params = params.set('disciplina', disciplina);
-  if (instructor) params = params.set('instructor', instructor);
+  if (instructorId) params = params.set('instructorId', instructorId); 
   if (dia) params = params.set('dia', dia);
 
   return this.http.get<any[]>(this.apiUrl, { params });

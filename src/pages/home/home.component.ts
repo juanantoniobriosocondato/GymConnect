@@ -42,8 +42,13 @@ cargarClases(): void {
 }
   
   getNombreInstructor(id: string): string {
-  const instructor = this.instructores.find(i => i.id === id);
-  return instructor ? instructor.nomApe : 'Sin asignar';
-}
+    const instructor = this.instructores.find(i => i.id === id);
+    return instructor ? instructor.nomApe : 'Sin asignar';
+  }
+
+  getImagenInstructor(id: string): string {
+    const instructor = this.instructores.find(i => i.id === id);
+    return instructor ? instructor.imagen : 'https://etenonfitness.com/wp-content/uploads/2021/12/gimnasio-1024x768.jpeg';
+  }
   
 }

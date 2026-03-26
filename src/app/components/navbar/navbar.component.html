@@ -1,5 +1,5 @@
 <mat-toolbar color="primary" class="navbar">
-  <span class="logo" routerLink="/">GYMCONNECT</span>
+  <span class="logo" routerLink="/"> <span class="text-white-600">GYM</span>CONNECT</span>
   
   <span class="spacer"></span>
 
@@ -23,7 +23,7 @@
     <div class="hidden md:block text-left">
       <p class="text-[10px] text-gray-500 uppercase font-black leading-none mb-1">Mi Cuenta</p>
       <p class="text-sm text-white font-bold leading-none">
-        Hola, <span class="group-hover:text-orange-500 transition-colors">{{ authService.currentUserValue?.nombre }}</span>
+        <span class="group-hover:text-orange-500 transition-colors">{{ authService.currentUserValue?.nombre }}</span>
       </p>
     </div>
 

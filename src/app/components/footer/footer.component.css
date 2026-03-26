@@ -1,0 +1,10 @@
+body, html {
+  height: 100%;
+}
+
+/* El contenedor principal debe crecer para empujar el footer abajo */
+main {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
