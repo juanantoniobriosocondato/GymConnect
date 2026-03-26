@@ -3,7 +3,7 @@
     
     <div class="relative group">
       <div class="absolute -inset-1 bg-gradient-to-r from-orange-600 to-red-600 rounded-2xl blur opacity-25"></div>
-      <img [src]="clase.instructor?.imagen" 
+      <img [src]="getImagenInstructor(clase.instructorId)" 
            class="relative rounded-2xl w-full h-[500px] object-cover border border-gray-800">
       <div class="absolute bottom-6 left-6">
         <h2 class="text-3xl font-black italic uppercase">{{ clase.instructor?.nomApe }}</h2>

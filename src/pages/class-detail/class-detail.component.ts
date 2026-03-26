@@ -7,6 +7,7 @@ import { ClassService } from '../../services/class.services';
 import { AuthService } from '../../services/auth.service'; 
 import { HttpClient } from '@angular/common/http';
 import { UiService } from '../../services/ui.service';
+import { InstructorService } from '../../services/instructor.service';
 
 @Component({
   selector: 'app-class-detail',
@@ -18,6 +19,7 @@ import { UiService } from '../../services/ui.service';
 export class ClassDetailComponent implements OnInit {
   claseId: string | null = null;
   clase: any = null;
+  instructores: any[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -25,8 +27,15 @@ export class ClassDetailComponent implements OnInit {
     private router: Router, 
     private classService: ClassService,
     public authService: AuthService,
-    private uiService: UiService
+    private uiService: UiService,
+    private instructorService: InstructorService
   ) {}
+
+  cargarInstructores() {
+    this.instructorService.getInstructores().subscribe(data => {
+    this.instructores = data;
+    });
+  }
 
   ngOnInit(): void {
   // Asegúrate de que el nombre del parámetro coincida con el de app.routes.ts (ej: :id)
@@ -45,6 +54,13 @@ export class ClassDetailComponent implements OnInit {
         .subscribe(data => this.clase = data);
     }
   }
+
+  getImagenInstructor(id: string): string {
+    const instructor = this.instructores.find(i => i.id === id);
+    return instructor ? instructor.imagen : 'https://etenonfitness.com/wp-content/uploads/2021/12/gimnasio-1024x768.jpeg';
+  }
+
+  
 
   reservar() {
   const usuarioId = this.authService.currentUserValue?.id;

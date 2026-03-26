@@ -89,24 +89,6 @@ cargarInstructores() {
   });
 }
 
-  /*
-  reservar(claseId: string): void {
-    const usuario = this.authService.currentUserValue;
-    if (!usuario) {
-      alert("Debes iniciar sesión");
-      return;
-    }
-
-    this.classService.reservarClase(claseId, usuario.id).subscribe({
-      next: () => {
-        alert("Reserva realizada");
-        this.cargarClases(); // Refrescamos para ver el cambio
-      },
-      error: (err) => alert("Error: " + (err.error || "No se pudo reservar"))
-    });
-  }
-    */
-
 abrirModalCrear() {
   console.log('Abriendo formulario de creación...');
   this.router.navigate(['/admin/clase/nueva']);
